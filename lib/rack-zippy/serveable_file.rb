@@ -20,6 +20,11 @@ module Rack
 
         headers['Vary'] = 'Accept-Encoding' if encoding_variants?
         headers['Content-Encoding'] = 'gzip' if gzipped?
+        
+        headers['Cache-Control']          = "public, max-age=86400"
+        headers['X-Frame-Options']        = "SAMEORIGIN"
+        headers['X-Content-Type-Options'] = "nosniff"
+        headers['X-XSS-Protection']       = "1; mode=block"
 
         headers['Content-Length'] = ::File.size(path).to_s
         return headers
